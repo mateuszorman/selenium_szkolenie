@@ -197,8 +197,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Fixtures.cs" />
+    <Compile Include="LessonX.cs" />
+    <Compile Include="Lesson1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestFixtureSetUpAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -10,7 +10,7 @@ using OpenQA.Selenium.Chrome;
 
 namespace Szkolenie
 {
-    public class Hello
+    public class Lesson1
     {
         ChromeDriver driver;
 
