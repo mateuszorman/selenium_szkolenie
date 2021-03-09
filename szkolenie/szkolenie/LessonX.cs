@@ -34,6 +34,7 @@ namespace szkolenie
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             Assert.IsTrue(driver.FindElement(By.ClassName("cb1-element")).Displayed);
             Assert.IsTrue(driver.Url == "https://www.seleniumeasy.com/test/basic-checkbox-demo.html");
+
         }
     }
 }
