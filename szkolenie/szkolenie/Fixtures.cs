@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 
 namespace szkolenie
 {
@@ -17,11 +18,19 @@ namespace szkolenie
         [SetUp]
         public void Precondition()
         {
+            string URL = TestContext.CurrentContext.Test.Arguments[0] as string;
+            string startup_popup = TestContext.CurrentContext.Test.Arguments[1] as string;
             driver = new ChromeDriver();
-            driver.Navigate().GoToUrl("https://www.seleniumeasy.com/test/basic-first-form-demo.html");
-            Thread.Sleep(1000);
+            driver.Navigate().GoToUrl(URL);
             driver.Manage().Window.Maximize();
-            driver.FindElement(By.ClassName("at-cm-no-button")).Click();
+            Thread.Sleep(1000); // must to be, without it couldn't find By.Id("at-cv-lightbox-close")
+            if (startup_popup == "True")
+            {
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                wait.Until(d => d.FindElement(By.Id("at-cv-lightbox-close")));
+                var Popup = driver.FindElement(By.Id("at-cv-lightbox-close"));
+                Popup.Click();
+            }
         }
 
         [TearDown]

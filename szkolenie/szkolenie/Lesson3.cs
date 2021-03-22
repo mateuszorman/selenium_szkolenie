@@ -12,17 +12,13 @@ using OpenQA.Selenium.Support.UI;
 
 namespace szkolenie
 {
-    class Lesson3
+    class Lesson3 : Fixtures
     {
-        ChromeDriver driver;
         [Test]
-        public void CheckBox()
+        [TestCase("https://www.seleniumeasy.com/test/jquery-dropdown-search-demo.html", "false")]
+        public void CheckBox(string URL, string startup_popup)
         {
             // arrange
-            driver = new ChromeDriver();
-            driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl("https://www.seleniumeasy.com/test/jquery-dropdown-search-demo.html");
-            Thread.Sleep(1000);
             var newZealandString = "New Zealand";
 
             // act
@@ -36,34 +32,39 @@ namespace szkolenie
             Assert.AreEqual(newZealandString, selectCountryDD.Text);
             Assert.IsTrue(selectCountryDD.Text == newZealandString);
             Assert.That(selectCountryDD.Text == newZealandString);
-            driver.Quit();
         }
 
         [Test]
-        public void ExplicitWait()
+        [TestCase("https://www.seleniumeasy.com/test/basic-first-form-demo.html", "false")]
+        public void ExplicitWait(string URL, string startup_popup)
         {
-            driver = new ChromeDriver();
-            driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl("https://www.seleniumeasy.com/test/basic-first-form-demo.html");
+            // arrange
 
+            // act
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(d => d.FindElement(By.Id("at-cv-lightbox-close")));
             var Popup = driver.FindElement(By.Id("at-cv-lightbox-close"));
+            Assert.IsTrue(Popup.Displayed);
             Popup.Click();
-            driver.Quit();
+
+            // assert
+            try
+            {
+                Assert.IsFalse(Popup.Displayed);
+            }
+            catch (Exception e)
+            {
+                // How to log.info?
+            }
         }
 
         [Test]
-        public void DragAndDrop()
+        [TestCase("https://www.globalsqa.com/demo-site/draganddrop/", "false")]
+        public void DragAndDrop(string URL, string startup_popup)
         {
-            driver = new ChromeDriver();
-            driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl("https://www.globalsqa.com/demo-site/draganddrop/");
-
-            Thread.Sleep(1000);
-
+            // arrange
             var frame = driver.FindElement(By.ClassName("demo-frame"));
-
+            // act
             driver.SwitchTo().Frame(frame);
 
             var image1 = driver.FindElements(By.ClassName("ui-draggable")).FirstOrDefault();
@@ -76,43 +77,35 @@ namespace szkolenie
             Thread.Sleep(1000);
 
             var trashAfter = trash.FindElements(By.TagName("img"));
+
+            // assert
             Assert.IsTrue(trashAfter.Count == 1);
-
             driver.SwitchTo().DefaultContent();
-
-            driver.Quit();
         }
 
-
-
         [Test]
-        public void NewWindow()
+        [TestCase("https://www.seleniumeasy.com/test/table-pagination-demo.html", "false")]
+        public void NewWindow(string URL, string startup_popup)
         {
-            driver = new ChromeDriver();
-            driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl("https://www.seleniumeasy.com/test/table-pagination-demo.html");
-
-            Thread.Sleep(1000);
-
+            // arrange
             var image1 = driver.FindElement(By.ClassName("cbt"));
-
             var windowHandlesBefore = driver.WindowHandles;
 
+            // act
             image1.Click();
-            Thread.Sleep(5000);
 
             var windowHandlesAfter = driver.WindowHandles;
-
             driver.SwitchTo().Window(driver.WindowHandles.Last());
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(d => d.FindElement(By.Id("live-testing-icon")));
 
+            // assert
             Assert.AreEqual("Cross Browser Testing Tool: 2050+ Real Browsers & Devices", driver.Title);
 
             driver.Close();
-
             driver.SwitchTo().Window(driver.WindowHandles.Last());
-            Assert.AreEqual("Selenium Easy - Table with Pagination Demo", driver.Title);
 
-            driver.Quit();
+            Assert.AreEqual("Selenium Easy - Table with Pagination Demo", driver.Title);
         }
     }
 }

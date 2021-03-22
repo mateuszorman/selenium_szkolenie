@@ -199,6 +199,7 @@
   <ItemGroup>
     <Compile Include="Fixtures.cs" />
     <Compile Include="Lesson2.cs" />
+    <Compile Include="Lesson3.cs" />
     <Compile Include="LessonX.cs" />
     <Compile Include="Lesson1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
