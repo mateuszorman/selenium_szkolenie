@@ -41,7 +41,7 @@ namespace szkolenie
 
             // act
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            wait.Until(d => d.FindElement(By.Id("at-cv-lightbox-close")));
+            wait.Until(d => d.FindElement(By.Id("at-cv-lightbox-close")).Displayed);
             Assert.IsTrue(popup.Displayed);
             popup.Click();
 
@@ -93,8 +93,8 @@ namespace szkolenie
 
             var windowHandlesAfter = driver.WindowHandles;
             driver.SwitchTo().Window(driver.WindowHandles.Last());
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            wait.Until(d => d.FindElement(By.Id("live-testing-icon")));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            wait.Until(d => d.FindElement(By.Id("live-testing-icon")).Displayed);
 
             // assert
             Assert.AreEqual("Cross Browser Testing Tool: 2050+ Real Browsers & Devices", driver.Title);
