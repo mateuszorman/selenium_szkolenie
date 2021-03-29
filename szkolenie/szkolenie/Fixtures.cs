@@ -23,11 +23,10 @@ namespace szkolenie
             driver = new ChromeDriver();
             driver.Navigate().GoToUrl(URL);
             driver.Manage().Window.Maximize();
-            Thread.Sleep(1000); // must to be, without it couldn't find By.Id("at-cv-lightbox-close")
             if (startup_popup == "True")
             {
                 var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-                wait.Until(d => d.FindElement(By.Id("at-cv-lightbox-close")));
+                wait.Until(d => d.FindElement(By.Id("at-cv-lightbox-close")).Displayed);
                 var Popup = driver.FindElement(By.Id("at-cv-lightbox-close"));
                 Popup.Click();
             }
